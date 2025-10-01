@@ -153,25 +153,36 @@ python hybridgan_simple.py \
 
 If evaluation scripts are included in `metrics/`:
 
-### Evaluate generated images using the Fréchet Inception Distance (FID) metric:
+### Fréchet Inception Distance (FID):
 
 ```bash
-python eval_metrics.py \
+python eval_fid.py \
   --real_dir /path/to/real/images \
   --fake_dir outputs/isic_run1/samples \
   --output results/fid_results.txt \
   --dataset_res 64
 ```
 
-### LPIPS
+### LPIPS (Intra-class Diversity)
 
+Using standard LPIPS backbone:
 ```bash
-python metrics/run_lpips.py \
-  --fake_dir outputs/isic_run1/samples \
-  --img_size 64 \
-  --per_class
+python eval_lpips.py \
+  --real_dir /path/to/real/images \
+  --gen_dir outputs/isic_run1/samples \
+  --output_json results/lpips_results.json \
+  --lpips_backbone alex \
+  --image_size 64
 ```
-
+Using custom ResNet18 model:
+```bash
+python eval_lpips.py \
+  --real_dir /path/to/real/images \
+  --gen_dir outputs/isic_run1/samples \
+  --output_json results/lpips_results.json \
+  --custom_model_path lpips_resnet18_ISIC_final.pth \
+  --image_size 64
+```
 
 
 ## Acknowledgements
